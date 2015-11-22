@@ -32,7 +32,8 @@ Most of the functionality available came from user or developer requests.
 (The degree to which it is possible to observe (intermediate and final) test results.)
 
 ### Isolateability
-(The degree to which the component under test (CUT) can be tested in isolation.)
+Mopidy implement unit tests in all modules, mostly because each pull request must have tests to be accepted, which means that the isolateability is achieved because everything is confined in its module. Mopidy use mock objects to simulate objects that mimic behavior of real objects in controlled ways. Pytest makes it possible to do unit tests. For example, to do tests in a single directory we just do :
+>py.test testes/http/
 
 ### Separation of concerns
 (The degree to which the component under test has a single, well defined responsibility.)
