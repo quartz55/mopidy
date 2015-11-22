@@ -39,7 +39,8 @@ Pytest also makes it possible to do single unit tests. For example, testing a si
 `py.test tests/http/`
 
 ### Separation of concerns
-(The degree to which the component under test has a single, well defined responsibility.)
+
+Mopidy have a successful separation of concerns and is pretty organized in this aspect. It is separated into several different folders and files, each one has with its own responsibility. Consequently they are easy to understand for anyone that understands the underline concepts that they implement. Mopidy, provides a good [documentation](https://docs.mopidy.com/en/latest/), that helps a lot to understand mopidy struture and makes it easier to contribution into the project. 
 
 ### Understandability
 (The degree to which the component under test is documented or self-explaining.)
