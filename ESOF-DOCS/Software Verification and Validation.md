@@ -49,4 +49,9 @@ Running `tox -e py27` we get the results:
 
 ![](./images/v&v/pytest_results.png "pytest results")
 
-A total of **2065** tests with a **78%** code coverage.
+A total of **2065** tests passed with a code coverage of **78%**.
+
+After analyzing the source code we concluded that most, if not all of the tests in the project are unit tests.
+Also, some of the packages still have no tests associated with them (like the "file" package).
+
+Regarding code coverage, besides being a pretty high percentage, we also think the tests themselves are valid and provide good insight on whether the software is working as intended or not.
