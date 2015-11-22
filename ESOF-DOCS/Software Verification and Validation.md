@@ -32,8 +32,11 @@ Most of the functionality available came from user or developer requests.
 (The degree to which it is possible to observe (intermediate and final) test results.)
 
 ### Isolateability
-Mopidy implement unit tests in all modules, mostly because each pull request must have tests to be accepted, which means that the isolateability is achieved because everything is confined in its module. Mopidy use mock objects to simulate objects that mimic behavior of real objects in controlled ways. Pytest makes it possible to do unit tests. For example, to do tests in a single directory we just do :
->py.test testes/http/
+Mopidy has unit tests for most modules, mostly because each contribution must include tests in order to be accepted, which means that the isolateability is achieved because everything is confined in its module.
+Also, since the project is based in Python, developers can make use of the Python package [mock](https://pypi.python.org/pypi/mock) to reduce or eliminate the dependency on other objects by using Mock objects instead, keeping each test considerably isolated.
+
+Pytest also makes it possible to do single unit tests. For example, testing a single directory:
+`py.test tests/http/`
 
 ### Separation of concerns
 (The degree to which the component under test has a single, well defined responsibility.)
