@@ -26,10 +26,13 @@ Most of the functionality available came from user or developer requests.
 ## Degree of Testability
 
 ### Controllability
-(The degree to which it is possible to control the state of the component under test (CUT) as required for testing.)
+As described below in [Isolateability](#isolateability) the packages/modules are very well organized and isolated which, coupled with the use of Mock objects in tests makes it very easy to control the state of an object/component as required for testing.
+Mopidy also makes use of some Dummy objects (like the audio, backend and mixer objects) to keep complexity low.
+Those dummy objects only provide the basic interface required by the other modules in order to work without having to deal with actual audio output or backend functionality.
 
 ### Observability
-(The degree to which it is possible to observe (intermediate and final) test results.)
+Pytest itself only has a command-line interface (CLI) which, even tho results are nicely presented, it's not as good to analyze data as a graphical interface. It is for this reason that, as said before, Mopidy makes use of [coveralls.io](https://coveralls.io/github/mopidy/mopidy) to analyze test results as well as code coverage.
+
 
 ### Isolateability
 Mopidy has unit tests for most modules, mostly because each contribution must include tests in order to be accepted, which means that the isolateability is achieved because everything is confined in its module.
@@ -39,7 +42,6 @@ Pytest also makes it possible to do single unit tests. For example, testing a si
 `py.test tests/http/`
 
 ### Separation of concerns
-
 Mopidy's source code is pretty organized, each package/module is separated into different folders, with each one trying to be as independent as possible, relying mostly on some global packages.
 Consequently, it is easy to understand what each module is responsible for.
 Besides that, Mopidy also provides a pretty good [documentation](https://docs.mopidy.com/en/latest/) that helps a lot to get around its struture and makes it easier to contribute to the project.
@@ -56,7 +58,7 @@ Through the use of [Travis CI](https://travis-ci.org) and [Tox](https://tox.read
 
 
 ## Test Statistics
-Running `tox -e py27` we get the results:
+Running `tox -e py27` we get the following results:
 
 ![](./images/v&v/pytest_results.png "pytest results")
 
