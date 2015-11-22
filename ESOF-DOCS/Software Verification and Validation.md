@@ -40,7 +40,9 @@ Pytest also makes it possible to do single unit tests. For example, testing a si
 
 ### Separation of concerns
 
-Mopidy have a successful separation of concerns and is pretty organized in this aspect. It is separated into several different folders and files, each one has with its own responsibility. Consequently they are easy to understand for anyone that understands the underline concepts that they implement. Mopidy, provides a good [documentation](https://docs.mopidy.com/en/latest/), that helps a lot to understand mopidy struture and makes it easier to contribution into the project. 
+Mopidy's source code is pretty organized, each package/module is separated into different folders, with each one trying to be as independent as possible, relying mostly on some global packages.
+Consequently, it is easy to understand what each module is responsible for.
+Besides that, Mopidy also provides a pretty good [documentation](https://docs.mopidy.com/en/latest/) that helps a lot to get around its struture and makes it easier to contribute to the project.
 
 ### Understandability
 (The degree to which the component under test is documented or self-explaining.)
