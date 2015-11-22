@@ -14,10 +14,11 @@ The main techniques used for verifying and validating (V&V) are **static techniq
 - **Dynamic techniques**: execute the system and observe its behavior (software testing and simulation).
 
 
-In Mopidy the software is constantly and consistently validated through the use of tools such as [Travis CI](https://travis-ci.org) and [Tox](https://tox.readthedocs.org/en/latest/) with [pytest](http://pytest.org/latest/) as a backend for testing the python code.
-Tests for documentation and code style (flake8) are also included in the testing suite.
+In Mopidy the software is constantly and consistently validated through the use of tools such as [Travis CI](https://travis-ci.org/mopidy/mopidy) which runs the test suite automatically when code is pushed to the repository as well as [coveralls.io](https://coveralls.io/github/mopidy/mopidy) which checks code coverage for every successful build.
 
-It is also very strict regarding new code contributed to the project as it requires tests for said code/features to be included with the contribution in order to be accepted upstream.
+The test suit uses [Tox](https://tox.readthedocs.org/en/latest/) with [pytest](http://pytest.org/latest/) as a backend for testing the python code, [Sphinx](http://sphinx-doc.org/) for documentation and finally [flake8](https://pypi.python.org/pypi/flake8) for code style.
+
+Contributions to the project are also very strict as it is required to include tests for said code/features in order to be accepted upstream.
 
 On the other hand verification is not as important, seeing as there isn't really a formal specification or requirements document.
 Most of the functionality available came from user or developer requests.
@@ -44,4 +45,8 @@ Most of the functionality available came from user or developer requests.
 
 
 ## Test Statistics
-There are **2056** tests total
+Running `tox -e py27` we get the results:
+
+![](./images/v&v/pytest_results.png "pytest results")
+
+A total of **2065** tests with a **78%** code coverage.
