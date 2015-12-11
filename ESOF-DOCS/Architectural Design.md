@@ -8,6 +8,11 @@
         - [Implementation view](#implementation-view)
         - [Deployment view](#deployment-view)
         - [Process view](#process-view)
+    - [Architectural Patterns](#architectural-patterns)
+        - [Layered Architecture](#layered-architecture)
+        - [Repository Architecture](#repository-architecture)
+        - [Client-Server Architecture](#client--server-architecture)
+
 
 ## Introduction
 
