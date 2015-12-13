@@ -69,13 +69,22 @@ All that's left is a user machine: PC, Smartphone, etc. that has a client instal
 ## Architectural Patterns
 
 ### Layered Architecture
-Mopidy have a layered architecture because it's system is organized into layers, where each of which groups related functionality provides services to the layer above. Each layer can only interact with the layer directly below, that's why mopidy have a **strict layered architecture**. The **Frontends layer** only interacts with **Core Layer**, this interacts with Mixer layer and **Backends Layer**, and this with **Audio layer**.
+Mopidy has a layered architecture because its system is organized into layers, where each layer provides services to the layer above.
+Each layer can only interact with the layer directly below, that's why Mopidy has a **strict layered architecture**.
+
+The **Frontends** only interact with the **Core** which interacts with the **Mixer** and **Backends** layers. The backends have the possibility of accessing the low level **Audio** layer if they wish to provide custom playback functionality.
 
 <img src="./images/architectural/LayeredArchitecture.jpg" />
 
 ### Repository Architecture
-All data in the mopidy is managed in a central repository, **GitHub**, that is accessible to all system components, in this case developers.
-The repository accepts requests from components passively, its have a variant **passive**
+All of Mopidy's source code and extensions are managed in a central repository on **GitHub** which is accessible to all system components, in this case developers.
+The repository accepts requests from components passively, it's called the **passive** variant.
 
 ### Client-Server Architecture
-Mopidy é um servidor de musica, assim sendo o seu acesso é feito atraves de clients, por exemplo: HTTP clients, MPD clients, MPD clients, UPnP clients. Assim, conclui-se facilmente que este tem uma Client-Server Architecture.
+
+Mopidy itself is only a music server. Interaction between the server and users is made through the use of clients such as:
+- HTTP clients
+- MPD clients
+- UPnP clients
+
+This easily classifies it as having a **Client-Server Architecture**
