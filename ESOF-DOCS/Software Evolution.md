@@ -21,6 +21,10 @@ As a closure to our semester research our group was assigned to identify a part 
 
 ## Submission of Patch
 
+## Conclusion
+
+The whole experience of reverse engineering an open-source project was very enlightening on what may possibly be our future in the IT market. Dealing with poorly documented projects, to unreadable code , to projects that are bottlenecked at its conception might very well be our daily basis. The concepts we learned and acquired while going through this project  are very important and this was a great experience to understand their reach.
+
 
 
 
