@@ -19,8 +19,8 @@ class TracklistController(object):
         self._next_tlid = 1
         self._tl_tracks = []
         self._version = 0
-
         self._shuffled = []
+        self._shuffled_prev = []
 
     # Properties
 
@@ -125,6 +125,7 @@ class TracklistController(object):
         if self.get_random() != value:
             self._trigger_options_changed()
         if value:
+            self._shuffled_prev = []
             self._shuffled = self.get_tl_tracks()
             random.shuffle(self._shuffled)
         return setattr(self, '_random', value)
@@ -312,10 +313,20 @@ class TracklistController(object):
                 logger.debug('Shuffling tracks')
                 self._shuffled = self._tl_tracks[:]
                 random.shuffle(self._shuffled)
+                self._shuffled_prev = []
 
         if self.get_random():
             if self._shuffled:
-                return self._shuffled[0]
+                try:
+                    currTrackPos = self._shuffled_prev.index(tl_track)
+                    if currTrackPos+1 >= len(self._shuffled_prev):
+                        raise ValueError
+
+                    nextTrack = self._shuffled_prev[currTrackPos+1]
+                    return nextTrack
+                except ValueError as e:
+                    track = self._shuffled[0]
+                    return self._shuffled[0]
             return None
 
         next_index = self.index(tl_track)
@@ -328,6 +339,8 @@ class TracklistController(object):
             next_index %= len(self._tl_tracks)
         elif next_index >= len(self._tl_tracks):
             return None
+
+        track = self._tl_tracks[next_index]
 
         return self._tl_tracks[next_index]
 
@@ -363,17 +376,25 @@ class TracklistController(object):
         deprecation.warn('core.tracklist.previous_track', pending=True)
         tl_track is None or validation.check_instance(tl_track, TlTrack)
 
-        if self.get_repeat() or self.get_consume() or self.get_random():
+        if self.get_repeat() or self.get_consume():
             return tl_track
 
+        if self.get_random():
+            currTrackPos = self._shuffled_prev.index(tl_track)
+            if currTrackPos-1 < 0:
+                return tl_track
+
+            prevTrack = self._shuffled_prev[currTrackPos-1]
+            return prevTrack
+
         position = self.index(tl_track)
-
         if position in (None, 0):
-            return None
+            return tl_track
 
+        track = self._tl_tracks[position - 1]
         # Since we know we are not at zero we have to be somewhere in the range
         # 1 - len(tracks) Thus 'position - 1' will always be within the list.
-        return self._tl_tracks[position - 1]
+        return track
 
     def add(self, tracks=None, at_position=None, uri=None, uris=None):
         """
@@ -447,7 +468,7 @@ class TracklistController(object):
                 at_position += 1
             else:
                 self._tl_tracks.append(tl_track)
-            tl_tracks.append(tl_track)
+                tl_tracks.append(tl_track)
 
         if tl_tracks:
             self._increase_version()
@@ -539,8 +560,8 @@ class TracklistController(object):
         for tl_track in tl_tracks[start:end]:
             new_tl_tracks.insert(to_position, tl_track)
             to_position += 1
-        self._tl_tracks = new_tl_tracks
-        self._increase_version()
+            self._tl_tracks = new_tl_tracks
+            self._increase_version()
 
     def remove(self, criteria=None, **kwargs):
         """
@@ -564,7 +585,7 @@ class TracklistController(object):
         for tl_track in tl_tracks:
             position = self._tl_tracks.index(tl_track)
             del self._tl_tracks[position]
-        self._increase_version()
+            self._increase_version()
         return tl_tracks
 
     def shuffle(self, start=None, end=None):
@@ -616,7 +637,14 @@ class TracklistController(object):
     def _mark_playing(self, tl_track):
         """Internal method for :class:`mopidy.core.PlaybackController`."""
         if self.get_random() and tl_track in self._shuffled:
+            self._shuffled_prev.append(tl_track)
             self._shuffled.remove(tl_track)
+
+            # Print the list of previously played tracks
+            prevs = []
+            for track in self._shuffled_prev:
+                prevs.append(track.tlid)
+            logger.info("Previous played: %s", prevs)
 
     def _mark_unplayable(self, tl_track):
         """Internal method for :class:`mopidy.core.PlaybackController`."""
@@ -637,6 +665,8 @@ class TracklistController(object):
             random.shuffle(self._shuffled)
         else:
             self._shuffled = []
+
+        self._shuffled_prev = []
 
         logger.debug('Triggering event: tracklist_changed()')
         listener.CoreListener.send('tracklist_changed')
